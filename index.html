@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+  <meta content="utf-8" http-equiv="encoding">
+
+  <title>Predictit Arbitrage Helper</title>
+  <script src="vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.3"></script>
+  <script src="https://momentjs.com/downloads/moment.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/base-min.css">
+  <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/pure-min.css" integrity="sha384-Uu6IeWbM+gzNVXJcM9XV3SohHtmWE+3VGi496jvgX1jyvDTXfdK+rfZc8C1Aehk5" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/grids-responsive-min.css" />
+  <link rel="stylesheet" href="https://icono-49d6.kxcdn.com/icono.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <div class="pure-g">
+      <div class="pure-u-1 center">
+        <h1>Predictit Arbitrage Helper</h1>
+
+
+        <form>
+            <label for="marketid">Market ID</label>
+            <input v-model="marketid" placeholder="Market id" id="marketid" type="text" ref="marketid">
+        </form>
+        <button  v-on:click="getMarket" ref="getmarket" class="pure-button pure-button-primary" >Get Market {{marketid}}</button>
+        <button  v-on:click="getBest" ref="getbest" class="pure-button pure-button-primary" >Get Most Profitable Market</button>
+
+        <h2>{{market_title}} </h2>
+        <a v-bind:href="market_url">predictit</a>
+
+        <div id="lastupdated">Time since update: {{time_since_update}}</div>
+        <div id="listcontracts">
+            <table  class="pure-table pure-table-striped" >
+                <thead class="sticky">
+                    <tr>
+                        <th></th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Optimal # of Shares</th>
+                    </tr>
+                </thead>
+
+                <tbody >
+                    <tr v-for="item in contracts" :key="item.contractId">
+                        <td><img v-bind:src=item.contractImageSmallUrl width="50px" /></td>
+                        <td>{{item.contractName}}</td>
+                        <td>{{item.bestNoPrice * 100}}c</td>
+                        <td><input type="range"  min="1" max="100" v-model:value="item.x" class="slider"> {{ item.x }} </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+
+        <button  v-on:click="computeProfit" ref="computepayoff" class="pure-button pure-button-primary" >Compute payoff</button>
+      <table class="pure-table pure-table-striped" >
+        <thead>
+          <tr>
+            <th>Investment</th>
+            <th>Worst Case Payoff</th>
+            <th>Minimum Profit</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td> {{ calculated_investment | round }}$
+            <td> {{ calculated_worst_payoff | round }}$
+            <td><span v-bind:class="{positivepayoff: (calculated_min_payoff > 0), negativepayoff: (calculated_min_payoff < 0)}"> {{ calculated_min_payoff | round }}</span>$</td>
+          </tr>
+        </tbody>
+      </table>
+
+
+
+     <h2> </h2>
+      <table class="pure-table pure-table-striped" >
+        <thead>
+          <tr>
+            <th>Top Markets</th>
+            <th>Profit</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr v-for="item in top_markets" :key="top_markets.market_id">
+            <td> <a v-bind:href=item.market_url>{{ item.market_id }}</a> </td>
+            <td> {{ item.profit.profit | round }} </td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+    </div>
+  </div>
+
+  <script>
+    
+    var app = new Vue({
+        el: '#app',
+        data: {
+            marketid: '7024',
+            market_title: 'Market information will appear here after you click',
+            market_url: '#',
+            profit: 0,
+            contracts: {},
+            top_markets: [],
+            time_last_update: 'never',
+            time_since_update: 'NA',
+            // data for calculator
+            fields: [
+                {'p': 87, 'x': 10},
+                {'p': 81, 'x': 13},
+                {'p': 83, 'x': 18},
+            ],
+            fee: 10,
+            calculated_investment: 0,
+            calculated_worst_payoff: 0,
+            calculated_min_payoff: 0,
+        }, //data
+        methods: {
+            refreshTime: function() {
+                this.time_last_update = moment()
+                this.time_since_update = moment(this.time_last_update).fromNow()
+            },
+            getBest: function() {
+                
+                url = "https://j4ukttnu2g.execute-api.us-east-2.amazonaws.com/default/predictit-market-info"
+                this.$http.get(url).then(response => {
+                    r = response.body
+                    console.log("Most profitable market:")
+                    console.log(r[0])
+                    this.marketid = r[0]['market_id']
+                    this.top_markets = r
+
+                    for(let market of this.top_markets) {
+                        market.market_url =  "https://www.predictit.org/markets/detail/" + market['market_id'] 
+                    }
+                    this.market_url = "https://www.predictit.org/markets/detail/" + app.contracts[0]['marketId'] 
+                    var button = this.$refs.getmarket
+                    button.click()
+                })
+            },
+            getMarket: function() {
+                url = "https://j4ukttnu2g.execute-api.us-east-2.amazonaws.com/default/predictit-market-info?market_id=" + this.marketid
+                //  url = 'fake_response.json'
+                console.log("Getting " +url)
+
+                this.$http.get(url).then(response => {
+                    this.contracts = response.body
+
+                    // round number of shares
+                    for (let row of this.contracts) {
+                        row.x = Math.round(30*row.x)
+                    }
+                    console.log(response.body)
+                    this.market_title = app.contracts[0]['marketName']
+                    this.market_url = "https://www.predictit.org/markets/detail/" + app.contracts[0]['marketId'] 
+                    this.profit = app.contracts[0]['profit']
+                    console.log(this.contracts[0])
+                    this.refreshTime()
+                })
+            },
+            addContract: function() {
+                app.fields.push({'p': 12, 'x': 12})
+            },
+
+            removeContract: function(i) {
+                app.fields.splice(i, 1)
+            },
+            computeProfit: function() {
+                investment = 0
+                ret = 0
+                best_ret = 0
+
+                for (let row of this.contracts) {
+                    x = row.x
+                    p = row.bestNoPrice
+                    investment += p*x 
+                    reti =  x * ( p + (1-this.fee/100.) * (1-p) )
+                    ret += reti
+                    best_ret = Math.max(best_ret, reti)
+                }
+                this.calculated_investment = investment
+                this.calculated_worst_payoff = ret - best_ret
+                this.calculated_min_payoff =  this.calculated_worst_payoff - investment
+            },
+            loadMarket: function() {
+                this.fields = this.contracts.map( item  => ({'x': item.x, 'p': item.bestNoPrice*100}))
+                
+            }
+        }, //methods
+        filters: {
+            round : function (value) {
+                return value.toFixed(3)
+            }
+        }, // filters
+        watch: {
+            
+            contracts: {
+                handler(val, oldVal) {
+                    var button = this.$refs.computepayoff
+                    button.click()
+                },
+                deep: true
+            },
+        }, //watch
+        created() {
+            this.$nextTick(function () {
+                var button = this.$refs.getmarket
+                button.click()
+                console.log("tick")
+                var self = this;
+
+                setInterval(function() {
+                    self.time_since_update = moment(this.time_last_update).fromNow()
+                }, 10000);
+
+            })
+        } //created
+    })
+
+
+  </script>
+</body>
+</html>

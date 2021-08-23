@@ -1,0 +1,96 @@
+h1 {
+    margin-bottom: 30px;
+    background-color:  #20123a;
+    color: white;
+    font-size: 1.5em;
+    padding: 10px;
+    margin-right: 50px;
+    text-align: center;
+border-radius: 25px;
+}
+
+h2 {
+    font-size: 1em;
+}
+
+body {
+    background-color: var(--color-bg-canvas);
+    background-color: #e9ecef;
+    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 10px;
+}
+
+button {
+    background-color: #20123a !important;
+}
+
+
+a.removecontract {
+    color: red;
+}
+
+a.addcontract {
+    color: #10b531;
+}
+
+.center {
+justify-content: center;
+display: grid;
+}
+.pure-u-md-1-2 {
+    padding: 10px;
+}
+
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+button {
+    margin-top:5px;
+    margin-bottom:5px;
+    margin-left: 200px;
+    margin-right: 200px;
+    border-radius: 5px !important;
+
+}
+/* * { box-shadow: 0 0 1px red; } */
+
+#marketid {
+    width: 10%;
+}
+
+#listcontracts {
+    max-height: 300px;
+    overflow: auto;
+    display: block;
+}
+#listcontracts table {
+   width: 100%;
+}
+
+/* Fix table head */
+#listcontracts .sticky {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+#lastupdated {
+    color: #848484;
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.positivepayoff {
+  font-weight: bold;
+  color: #47a447;
+}
+
+.negativepayoff {
+  font-weight: bold;
+  color: #d9534f;
+}
