@@ -29,11 +29,20 @@
             </p>
             <b>Instructions. </b>
             <i>Either</i>
+
+            <button  v-on:click="getBest" ref="getbest" class="pure-button pure-button-primary" >Get Most the Profitable Market</button>
+            <i>Or</i>
             enter market id manually
             <input v-model="marketid" placeholder="Market id" id="marketid" type="text" ref="marketid"> and click
             <button  v-on:click="getMarket" ref="getmarket" class="pure-button pure-button-primary">Go</button>
-            <i>Or</i>
-            <button  v-on:click="getBest" ref="getbest" class="pure-button pure-button-primary" >Get Most the Profitable Market</button>
+            <div>
+            Tips:
+            <ul>
+            <li>market id can be read directly for the url of the market:<br/>
+            <img src="id_in_predctit_url.png" width="800px"/>
+            <li> You can manually change the number of shares in the table below to see how you profit will change.
+            </ul>
+            </div>
         </div>
 
 
@@ -112,7 +121,7 @@
     var app = new Vue({
         el: '#app',
         data: {
-            marketid: '7024',
+            marketid: '6867',
             market_title: 'Market information will appear here after you click',
             market_url: '#',
             profit: 0,
@@ -168,7 +177,7 @@
                 }
 
                 // 
-                console.log("Getting " +url)
+                console.log("Getting " + url)
 
                 this.$http.get(url).then(response => {
                     this.contracts = response.body
@@ -177,6 +186,7 @@
                     for (let row of this.contracts) {
                         row.x = Math.round(30*row.x)
                     }
+                    console.log("response body")
                     console.log(response.body)
                     this.market_title = app.contracts[0]['marketName']
                     this.market_url = "https://www.predictit.org/markets/detail/" + app.contracts[0]['marketId'] 
