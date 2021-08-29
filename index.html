@@ -21,15 +21,23 @@
         <h1>Predictit Arbitrage Helper</h1>
 
 
-        <form>
-            <label for="marketid">Market ID</label>
-            <input v-model="marketid" placeholder="Market id" id="marketid" type="text" ref="marketid">
-        </form>
-        <button  v-on:click="getMarket" ref="getmarket" class="pure-button pure-button-primary" >Get Market {{marketid}}</button>
-        <button  v-on:click="getBest" ref="getbest" class="pure-button pure-button-primary" >Get Most Profitable Market</button>
 
-        <h2>{{market_title}} </h2>
-        <a v-bind:href="market_url">predictit</a>
+        <div class="inputmethod">
+            <p>
+            This calculator helps you find the market on <a href="predictit.org">predictit</a> that have arbitrage opportunities. It can find the most profitable markets, and computes the optimal number of shares of NO to buy in each contract.
+            For more details, please checkout the <a href="youtube.com">video </a>.
+            </p>
+            <b>Instructions. </b>
+            <i>Either</i>
+            enter market id manually
+            <input v-model="marketid" placeholder="Market id" id="marketid" type="text" ref="marketid"> and click
+            <button  v-on:click="getMarket" ref="getmarket" class="pure-button pure-button-primary">Go</button>
+            <i>Or</i>
+            <button  v-on:click="getBest" ref="getbest" class="pure-button pure-button-primary" >Get Most the Profitable Market</button>
+        </div>
+
+
+        <h2>Current Market: <a v-bind:href="market_url">{{market_title}}</a> </h2>
 
         <div id="lastupdated">Time since update: {{time_since_update}}</div>
         <div id="listcontracts">
@@ -39,7 +47,7 @@
                         <th></th>
                         <th>Name</th>
                         <th>Price</th>
-                        <th>Optimal # of Shares</th>
+                        <th># of Shares</th>
                     </tr>
                 </thead>
 
@@ -48,7 +56,7 @@
                         <td><img v-bind:src=item.contractImageSmallUrl width="50px" /></td>
                         <td>{{item.contractName}}</td>
                         <td>{{item.bestNoPrice * 100}}c</td>
-                        <td><input type="range"  min="1" max="100" v-model:value="item.x" class="slider"> {{ item.x }} </td>
+                        <td><input type="value"  min="1" max="100" v-model:value="item.x" class="slider">  </td>
                     </tr>
                 </tbody>
             </table>
@@ -56,24 +64,26 @@
 
 
 
-        <button  v-on:click="computeProfit" ref="computepayoff" class="pure-button pure-button-primary" >Compute payoff</button>
+     <h2> </h2>
       <table class="pure-table pure-table-striped" >
         <thead>
           <tr>
             <th>Investment</th>
-            <th>Worst Case Payoff</th>
+            <th>Worst Case Return</th>
             <th>Minimum Profit</th>
           </tr>
         </thead>
-
         <tbody>
           <tr>
-            <td> {{ calculated_investment | round }}$
-            <td> {{ calculated_worst_payoff | round }}$
-            <td><span v-bind:class="{positivepayoff: (calculated_min_payoff > 0), negativepayoff: (calculated_min_payoff < 0)}"> {{ calculated_min_payoff | round }}</span>$</td>
+            <td>${{ calculated_investment | round }}
+            <td>${{ calculated_worst_payoff | round }}
+            <td>$<span v-bind:class="{positivepayoff: (calculated_min_payoff > 0), negativepayoff: (calculated_min_payoff < 0)}"> {{ calculated_min_payoff | round }}</span></td>
           </tr>
         </tbody>
       </table>
+
+
+        <button  v-on:click="computeProfit" ref="computepayoff" class="pure-button pure-button-primary" >Update profit computation</button>
 
 
 

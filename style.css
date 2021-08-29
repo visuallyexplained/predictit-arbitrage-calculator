@@ -94,3 +94,18 @@ button {
   font-weight: bold;
   color: #d9534f;
 }
+
+.inputmethod {
+    border: 1px solid  #20123a;
+    border-radius: 25px;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin: 10px;
+}
+
+.inputmethod button {
+    margin-left: 5px !important;
+    margin-right: 5px !important;
+    display: inline;
+}
