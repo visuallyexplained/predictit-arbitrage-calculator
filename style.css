@@ -109,3 +109,8 @@ button {
     margin-right: 5px !important;
     display: inline;
 }
+@media only screen and (max-width: 768px) {
+  * {
+    font-size: 30px;
+  }
+}
