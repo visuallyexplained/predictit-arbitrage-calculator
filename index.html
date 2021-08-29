@@ -22,11 +22,8 @@
 
 
 
+
         <div class="inputmethod">
-            <p>
-            This calculator helps you find the market on <a href="predictit.org">predictit</a> that have arbitrage opportunities. It can find the most profitable markets, and computes the optimal number of shares of NO to buy in each contract.
-            For more details, please checkout the <a href="youtube.com">video </a>.
-            </p>
             <b>Instructions. </b>
             <i>Either</i>
 
@@ -35,17 +32,8 @@
             enter market id manually
             <input v-model="marketid" placeholder="Market id" id="marketid" type="text" ref="marketid"> and click
             <button  v-on:click="getMarket" ref="getmarket" class="pure-button pure-button-primary">Go</button>
-            <div>
-            Tips:
-            <ul>
-            <li>market id can be read directly for the url of the market:<br/>
-            <img src="id_in_predctit_url.png" width="800px"/>
-            <li> You can manually change the number of shares in the table below to see how you profit will change.
-            </ul>
+
             </div>
-        </div>
-
-
         <h2>Current Market: <a v-bind:href="market_url">{{market_title}}</a> </h2>
 
         <div id="lastupdated">Time since update: {{time_since_update}}</div>
@@ -114,6 +102,23 @@
         </table>
     </div>
     </div>
+
+    <h2> </h2>
+        <div class="inputmethod">
+            <h2>About</h2>
+            <p>
+            This calculator helps you find the market on <a href="predictit.org">predictit</a> that have arbitrage opportunities. It can find the most profitable markets, and computes the optimal number of shares of NO to buy in each contract.
+            For more details, please checkout the <a href="youtube.com">video </a>.
+            </p>
+            <div>
+            Tips:
+            <ul>
+            <li>market id can be read directly for the url of the market:<br/>
+            <img src="id_in_predctit_url.png" width="800px"/>
+            <li> You can manually change the number of shares in the table below to see how you profit will change.
+            </ul>
+            </div>
+        </div>
   </div>
 
   <script>
@@ -153,7 +158,7 @@
                     console.log("Most profitable market:")
                     console.log(r[0])
                     this.marketid = r[0]['market_id']
-                    this.top_markets = r
+                    this.top_markets = r.slice(0, 3)
 
                     for(let market of this.top_markets) {
                         market.market_url =  "https://www.predictit.org/markets/detail/" + market['market_id'] 
