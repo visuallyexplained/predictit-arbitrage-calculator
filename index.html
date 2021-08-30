@@ -12,6 +12,7 @@
     <body>
         <div id="app" class="content">
             <h1>Predictit Arbitrage Helper</h1>
+            <p>
                 <b>Instructions. </b>
                 <i>Either</i>
 
@@ -20,6 +21,7 @@
                 enter market id manually
                 <input v-model="marketid" placeholder="Market id" id="marketid" type="text" ref="marketid"> and click
                 <button  v-on:click="getMarket" ref="getmarket">Go</button>
+                </p>
 
             <h2>Current Market: <a v-bind:href="market_url">{{market_title}}</a> </h2>
 
