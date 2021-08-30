@@ -20,14 +20,14 @@
                 <i>Or</i>
                 enter market id manually
                 <input v-model="marketid" placeholder="Market id" id="marketid" type="text" ref="marketid"> and click
-                <button  v-on:click="getMarket" ref="getmarket" class="pure-button pure-button-primary">Go</button>
+                <button  v-on:click="getMarket" ref="getmarket">Go</button>
 
             </div>
             <h2>Current Market: <a v-bind:href="market_url">{{market_title}}</a> </h2>
 
             <div id="lastupdated">Time since update: {{time_since_update}}</div>
             <div id="listcontracts">
-                <table  class="pure-table pure-table-striped" >
+                <table>
                     <thead class="sticky">
                         <tr>
                             <th></th>
@@ -51,7 +51,7 @@
 
 
             <h2> </h2>
-            <table class="pure-table pure-table-striped" >
+            <table>
                 <thead>
                     <tr>
                         <th>Investment</th>
@@ -69,7 +69,7 @@
             </table>
 
 
-            <button  v-on:click="computeProfit" ref="computepayoff" class="pure-button pure-button-primary" >Update profit computation (If needed)</button>
+            <button  v-on:click="computeProfit" ref="computepayoff" >Update profit computation (If needed)</button>
 
 
 
