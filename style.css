@@ -20,32 +20,14 @@ body {
     padding: 10px;
 }
 
-button {
-    background-color: #20123a !important;
-}
 
 
-a.removecontract {
-    color: red;
-}
-
-a.addcontract {
-    color: #10b531;
-}
 
 .center {
 justify-content: center;
 display: grid;
 }
-.pure-u-md-1-2 {
-    padding: 10px;
-}
 
-* {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
 
 button {
     margin-top:5px;
@@ -53,20 +35,22 @@ button {
     margin-left: 200px;
     margin-right: 200px;
     border-radius: 5px !important;
-
+    background-color: #20123a !important;
+    color: white;
+    padding: 10px;
 }
-/* * { box-shadow: 0 0 1px red; } */
 
 #marketid {
     width: 10%;
 }
 
 #listcontracts {
-    max-height: 300px;
+    max-height: 400px;
     overflow: auto;
     display: block;
 }
-#listcontracts table {
+
+table {
    width: 100%;
 }
 
@@ -81,6 +65,7 @@ button {
     color: #848484;
     margin-left: auto;
     margin-right: 0;
+    font-size: .5em;
 }
 
 .positivepayoff {
@@ -93,21 +78,54 @@ button {
   color: #d9534f;
 }
 
-.inputmethod {
-    border: 1px solid  #20123a;
-    border-radius: 25px;
+.instructions{
     padding: 10px;
     padding-left: 20px;
     padding-right: 20px;
     margin: 10px;
+    font-size: 1em;
 }
 
-.inputmethod button {
+.instructions button, .instructions input {
     margin-left: 5px !important;
     margin-right: 5px !important;
     display: inline;
+    font-size: 1em;
+    padding: 5px;
 }
 
-html {
-    font-size: 24px;
+table {
+    border: 1px solid #cbcbcb;
+    border-collapse: collapse;
+}
+
+table thead {
+    background-color: #e0e0e0;
+    color: #000;
+    text-align: left;
+    vertical-align: bottom;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+td, th {
+    border-left: 1px solid #cbcbcb;
+    border-left-width: 1px;
+    border-left-style: solid;
+    border-left-color: rgb(203, 203, 203);
+    border-width: 0 0 0 1px;
+    border-top-width: 0px;
+    border-right-width: 0px;
+    border-bottom-width: 0px;
+    border-left-width: 1px;
+    margin: 0;
+    overflow: visible;
+    padding: .5em 1em;
+}
+
+#about {
+
+    margin-top: 50px;
 }

@@ -123,11 +123,11 @@ var app = new Vue({
         this.$nextTick(function () {
             var button = this.$refs.getmarket
             button.click()
-            console.log("tick")
             var self = this;
 
             setInterval(function() {
-                self.time_since_update = moment(this.time_last_update).fromNow()
+                console.log("tick")
+                self.time_since_update = moment(self.time_last_update).fromNow()
             }, 10000);
 
         })
