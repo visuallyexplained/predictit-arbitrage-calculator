@@ -16,13 +16,13 @@
             <div class="inputmethod">
                 <b>Instructions. </b>
                 <i>Either</i>
-
                 <button  v-on:click="getBest" ref="getbest">Get Most the Profitable Market</button>
                 <i>Or</i>
                 enter market id manually
                 <input v-model="marketid" placeholder="Market id" id="marketid" type="text" ref="marketid"> and click
                 <button  v-on:click="getMarket" ref="getmarket">Go</button>
             </div>
+
             <h2>Current Market: <a v-bind:href="market_url">{{market_title}}</a> </h2>
 
             <div id="lastupdated">Time since update: {{time_since_update}}</div>
