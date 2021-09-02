@@ -13,6 +13,22 @@
         <div id="app" class="content">
 
             <h1>Predictit Arbitrage Helper</h1>
+
+            <div id="about">
+                <h2>About</h2>
+                    This calculator helps you find the market on <a href="predictit.org">predictit</a> that have arbitrage opportunities. It can find the most profitable markets, and computes the optimal number of shares of NO to buy in each contract.
+                    For more details, please checkout the <a href="https://www.youtube.com/watch?v=ZNSqsPlDyGc">video</a>.
+                <div>
+                    Tips:
+                    <ul>
+                        <li>market id can be read directly for the url of the market:<br/>
+                            <img src="id_in_predctit_url.png" width="800px"/>
+                        <li> You can manually change the number of shares in the table below to see how you profit will change.
+                    </ul>
+                </div>
+            </div>
+
+                <h2>Instructions</h2>
             <div class="instructions">
                 <button  v-on:click="getBest" ref="getbest">Get Most Profitable Markets</button>
                 <i>Or</i>
@@ -89,19 +105,6 @@
                 </tbody>
             </table>
 
-            <div id="about">
-                <h2>About</h2>
-                    This calculator helps you find the market on <a href="predictit.org">predictit</a> that have arbitrage opportunities. It can find the most profitable markets, and computes the optimal number of shares of NO to buy in each contract.
-                    For more details, please checkout the <a href="youtube.com">video </a>.
-                <div>
-                    Tips:
-                    <ul>
-                        <li>market id can be read directly for the url of the market:<br/>
-                            <img src="id_in_predctit_url.png" width="800px"/>
-                        <li> You can manually change the number of shares in the table below to see how you profit will change.
-                    </ul>
-                </div>
-            </div>
         </div>
 
 
