@@ -1,3 +1,4 @@
+var aws_url = "http://3.142.46.94:5000"
 var app = new Vue({
     el: '#app',
     data: {
@@ -27,7 +28,7 @@ var app = new Vue({
         },
         getBest: function() {
 
-            url = "https://j4ukttnu2g.execute-api.us-east-2.amazonaws.com/default/predictit-market-info"
+            url = amazon_url;
             this.$http.get(url).then(response => {
                 r = response.body
                 console.log("Most profitable market:")
@@ -53,7 +54,7 @@ var app = new Vue({
                 console.log("Running in debug mode!");
                 url = 'fake_response.json';
             } else {
-                url = "https://j4ukttnu2g.execute-api.us-east-2.amazonaws.com/default/predictit-market-info?market_id=" + this.marketid;
+                url =  aws_url +"/?marketid=" + this.marketid;
             }
 
             //
