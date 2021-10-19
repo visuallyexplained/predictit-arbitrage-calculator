@@ -1,4 +1,5 @@
 var aws_url = "http://3.142.46.94:5000"
+//var aws_url = "https://localhost:5000"
 var app = new Vue({
     el: '#app',
     data: {
@@ -28,7 +29,7 @@ var app = new Vue({
         },
         getBest: function() {
 
-            url = amazon_url;
+            url = aws_url;
             this.$http.get(url).then(response => {
                 r = response.body
                 console.log("Most profitable market:")
